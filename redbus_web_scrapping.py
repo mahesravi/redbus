@@ -132,10 +132,10 @@ def getBusDetails(bus_routes):
                 bus_details["price"] = bus_price.text
             try:
                 bus_seatavailablity = bus.find_element(By.XPATH, ".//div[@class='seat-left m-top-30']")
-                bus_details["seats_available"] = bus_seatavailablity.text.split( )[0]          
+                bus_details["seats_available"] = bus_seatavailablity.text.split(' ')[0]          
             except NoSuchElementException:
                 bus_seatavailablity = bus.find_element(By.XPATH, ".//div[@class='seat-left m-top-16']")
-                bus_details["seats_available"] = bus_seatavailablity.text.split( )[0]
+                bus_details["seats_available"] = bus_seatavailablity.text.split(' ')[0]
             try:
                 bus_rating = bus.find_element(By.XPATH, ".//div[@class='rating-sec lh-24']")
                 bus_details["star_rating"] = bus_rating.text

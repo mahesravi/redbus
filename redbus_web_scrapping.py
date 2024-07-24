@@ -24,7 +24,7 @@ con = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
 "Trusted_Connection=yes;")
 cursor = con.cursor()
 
-def getPageCount(driver):
+def getPageCount():
     """
     This menthod returns the number of pages in the selected route.
     """
@@ -36,7 +36,7 @@ def getPageCount(driver):
             return 0
     return len(all_pageList)
 
-def get_page_data(ind, driver):
+def get_page_data(ind):
     """
     This method fetches the route details and the corresponding route link
 
@@ -52,19 +52,19 @@ def get_page_data(ind, driver):
         bus_routes.append([route.text, route.get_attribute("href")])
 
 
-def getBusRouteDetails(state_link, driver):
+def getBusRouteDetails(state_link):
     """
     Method for calling page count and page data fetch request
     """
     driver.get(state_link)
     time.sleep(5)
-    no_of_pages = getPageCount(driver)
+    no_of_pages = getPageCount()
 
     print(f"Number of pages:{no_of_pages}")
 
     if(no_of_pages > 0):
         for ind in range(1, no_of_pages+1):
-            data = get_page_data(ind, driver)
+            data = get_page_data(ind)
 
 def getBusDetails(bus_routes):
     """
@@ -214,7 +214,7 @@ for ind in states_df.index:
     print(f"Running for {state}")
     state_link = f"https://www.redbus.in/online-booking/{state}/?utm_source=rtchometile"
     print(state_link)
-    getBusRouteDetails(state_link, driver)
+    getBusRouteDetails(state_link)
     time.sleep(2)
     getBusDetails(bus_routes)
 

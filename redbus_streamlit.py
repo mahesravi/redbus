@@ -16,7 +16,7 @@ cursor = con.cursor()
 df = pd.DataFrame()
 
 
-def get_results(route, seat_type, ac_type, rating, startting_time):
+def get_results(route, seat_type, ac_type, rating, startting_time, min_selected_price, max_selected_price):
   """
   Button click event - Search
 
@@ -47,7 +47,8 @@ def get_results(route, seat_type, ac_type, rating, startting_time):
    and bustype like '%{seat_type}%'
    and bustype like '%{ac_type}%'
    and star_rating > {rating_value}
-   and departing_time > '{bus_time}'
+   and cast(departing_time as time) > '{bus_time}'
+   and price between {min_selected_price} and {max_selected_price}
    """
 
   global df
@@ -84,7 +85,7 @@ with title:
 
 col1, col2, col3 = st.columns([3, 3, 3])
 with col1:
-  route_filter = cursor.execute("Select distinct route_name from bus_routes")
+  route_filter = cursor.execute("Select distinct route_name from bus_routes order by route_name")
   routes = [row[0] for row in cursor.fetchall()]
   route = st.selectbox(
     "Select the Route",
@@ -133,6 +134,8 @@ with col6:
     int(min_price),
     int(max_price),
     (int(min_price / 2), int(max_price / 2)))
+  min_selected_price = price_range[0]
+  max_selected_price = price_range[1]
 
 button_state = st.button(
   "Search",
@@ -141,6 +144,8 @@ button_state = st.button(
     seat_type,
     ac_type,
     rating,
-    startting_time))
+    startting_time,
+    min_selected_price,
+    max_selected_price))
 if (button_state):
   st.dataframe(df)

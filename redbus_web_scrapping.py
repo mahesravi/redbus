@@ -192,6 +192,8 @@ def save_route_data(redbus_data):
             ,row.seats_available
         )
 
+        con.commit()
+
 
 # Home page
    

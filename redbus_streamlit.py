@@ -148,4 +148,4 @@ button_state = st.button(
     min_selected_price,
     max_selected_price))
 if (button_state):
-  st.dataframe(df)
+  st.dataframe(df, hide_index=True)

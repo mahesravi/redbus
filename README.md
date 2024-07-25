@@ -72,11 +72,11 @@ user makes the search request from application.
 # File: government_states.csv
 This file has 10 states from the redbus application
 
-# Python file running:
+# Python file run command:
 
 python redbus_web_scrapping.py
 
-# Streamlit file running:
+# Streamlit file run command:
 
 streamlit run redbus_streamlit.py
 
